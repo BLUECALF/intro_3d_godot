@@ -1,0 +1,53 @@
+[gd_scene load_steps=11 format=2]
+
+[ext_resource path="res://addons/zylann.hterrain/hterrain.gd" type="Script" id=1]
+[ext_resource path="res://addons/zylann.hterrain/hterrain_texture_set.gd" type="Script" id=2]
+[ext_resource path="res://real_map/data.hterrain" type="Resource" id=3]
+[ext_resource path="res://Ground037_1K-JPG/Ground037_1K_NormalGL.jpg" type="Texture" id=4]
+[ext_resource path="res://Ground049A_1K-JPG/Ground049A_1K_NormalGL.jpg" type="Texture" id=5]
+[ext_resource path="res://Ground037_1K-JPG/Ground037_1K_Color.jpg" type="Texture" id=6]
+[ext_resource path="res://Ground049A_1K-JPG/Ground049A_1K_Color.jpg" type="Texture" id=7]
+
+[sub_resource type="Resource" id=1]
+script = ExtResource( 2 )
+mode = 0
+textures = [ [ ExtResource( 6 ), ExtResource( 7 ) ], [ ExtResource( 4 ), ExtResource( 5 ) ] ]
+
+[sub_resource type="PlaneMesh" id=2]
+
+[sub_resource type="SpatialMaterial" id=3]
+flags_transparent = true
+albedo_color = Color( 0.6, 0.635294, 0.921569, 0.294118 )
+metallic = 1.0
+metallic_specular = 0.62
+roughness = 0.6
+normal_enabled = true
+normal_scale = 1.0
+detail_enabled = true
+detail_blend_mode = 0
+detail_uv_layer = 0
+uv1_scale = Vector3( 10, 10, 1 )
+
+[node name="real_map" type="Spatial"]
+
+[node name="HTerrain" type="Spatial" parent="."]
+script = ExtResource( 1 )
+_terrain_data = ExtResource( 3 )
+chunk_size = 32
+collision_enabled = true
+collision_layer = 1
+collision_mask = 1
+shader_type = "Classic4Lite"
+custom_shader = null
+custom_globalmap_shader = null
+texture_set = SubResource( 1 )
+shader_params/u_ground_uv_scale = 20
+shader_params/u_depth_blending = true
+shader_params/u_triplanar = true
+shader_params/u_tile_reduction = Plane( 0, 0, 0, 0 )
+
+[node name="MeshInstance" type="MeshInstance" parent="HTerrain"]
+transform = Transform( 300, 0, 0, 0, 1, 0, 0, 0, 300, 0, 0, 0 )
+mesh = SubResource( 2 )
+skeleton = NodePath("../..")
+material/0 = SubResource( 3 )
