@@ -1,16 +1,23 @@
 extends KinematicBody
 
+
+var mouse_sensitivity =  10
 var gravity = Vector3.DOWN * 12
 var speed =  4
 var jump_speed  =  6
 var spin = 0.1
-var jump 
+var jump
+
+# var for the camera joystick
+export (NodePath) var joystickRightPath
+onready var joystickRight : VirtualJoystick = get_node(joystickRightPath)
 
 var velocity = Vector3()
 
 func _physics_process(delta: float) -> void:
 	velocity += gravity * delta
 	get_input()
+	rotate_player()
 	velocity = move_and_slide(velocity,Vector3.UP)
 	if jump and is_on_floor():
 		velocity.y = jump_speed
@@ -37,3 +44,7 @@ func get_input() -> void:
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventMouseMotion:
 		rotate_y(-lerp(0, spin,event.relative.x/10))
+
+func rotate_player():
+	rotate_y(deg2rad(joystickRight.get_output().x * mouse_sensitivity))
+	rotate_x(deg2rad(joystickRight.get_output().y * mouse_sensitivity))

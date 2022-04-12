@@ -1,0 +1,28 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://joystick/virtual_joystick.tscn" type="PackedScene" id=1]
+
+[node name="controller_scene" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="background" type="ColorRect" parent="CanvasLayer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0.0784314, 0.054902, 0.054902, 0.317647 )
+
+[node name="vj_left" parent="CanvasLayer/background" instance=ExtResource( 1 )]
+margin_left = 57.9564
+margin_top = -245.357
+margin_right = 257.956
+margin_bottom = -45.3572
+
+[node name="vj_right" parent="CanvasLayer/background" instance=ExtResource( 1 )]
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -260.476
+margin_top = -255.437
+margin_right = -60.4762
+margin_bottom = -55.4365

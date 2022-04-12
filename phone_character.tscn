@@ -1,0 +1,56 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://joystick/virtual_joystick.tscn" type="PackedScene" id=1]
+[ext_resource path="res://phone_character/phone_character.gd" type="Script" id=2]
+
+[sub_resource type="SphereMesh" id=1]
+
+[sub_resource type="CubeMesh" id=2]
+
+[sub_resource type="CapsuleShape" id=3]
+
+[sub_resource type="BoxShape" id=4]
+
+[sub_resource type="CanvasItemMaterial" id=5]
+particles_animation = true
+particles_anim_h_frames = 1
+particles_anim_v_frames = 1
+particles_anim_loop = false
+
+[node name="phone_character" type="KinematicBody"]
+script = ExtResource( 2 )
+
+[node name="head" type="Spatial" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5, 0 )
+
+[node name="MeshInstance" type="MeshInstance" parent="head"]
+mesh = SubResource( 1 )
+material/0 = null
+
+[node name="Camera" type="Camera" parent="head"]
+
+[node name="body" type="Spatial" parent="."]
+
+[node name="MeshInstance" type="MeshInstance" parent="body"]
+mesh = SubResource( 2 )
+material/0 = null
+
+[node name="body_collision_shape" type="CollisionShape" parent="."]
+transform = Transform( 1, 0, 0, 0, 3, 0, 0, 0, 1, 0, 0, 0 )
+shape = SubResource( 3 )
+
+[node name="legs_collision_shape" type="CollisionShape" parent="."]
+transform = Transform( 1.5, 0, 0, 0, 0.2, 0, 0, 0, 1.5, 0, -2.5, 0 )
+shape = SubResource( 4 )
+
+[node name="Virtual joystick" parent="." instance=ExtResource( 1 )]
+material = SubResource( 5 )
+margin_left = 103.817
+margin_top = -273.545
+margin_right = 303.817
+margin_bottom = -73.545
+pressed_color = Color( 0.427451, 0.52549, 0.827451, 1 )
+action_left = "strafe_left"
+action_right = "strafe_right"
+action_up = "move_foward"
+action_down = "move_back"
